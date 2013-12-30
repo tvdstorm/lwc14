@@ -23,8 +23,8 @@ implementation of domain-specific language parsers, analyzers,
 compilers and IDEs. Notable features include:
 \begin{itemize}
 \item Functional programming at the core, including support for
-  extensible modules, higher-order functions, powerful pattern
-  matching and comprehensions.
+  higher-order functions, powerful pattern matching,
+  comprehensions and extensible modules.
 \item Built-in context-free grammars backed by general parsing. As a
   result, there is no restriction on grammar rules (e.g.,
   left-recursion is supported) and syntax definitions can be built in
@@ -51,7 +51,7 @@ code compatible with the reference solution~\cite{ReferenceImpl}.
 The syntax of both languages is defined using Rascal's built-in
 context-free grammars. Annotations in the grammar enable custom syntax
 highlighting and code folding behavior in the QL/QLS editors. Semantic
-analysis and compilation are are transformations of the syntax tree.
+analysis and compilation are transformations of the syntax tree.
 Semantic analysis consists of name analysis (finding a declaration for
 every used question name) and type checking (ensuring that question
 are correctly used in expressions, and that conditions are boolean
@@ -59,10 +59,16 @@ expressions). In both cases, the tree is decorated with errors and
 warnings (if any) which are shown at the appropriate locations in the
 QL/QLS editors. When type checking QLS models, the corresponding QL
 model is loaded first, to allow checking the consistency of question
-placement and widget assignment. Compilation (code generation) is
-realized using Rascal's string templates. It is simply a traversal
-over the syntax tree (which is assumed to have passed all semantic
-checks) which outputs JavaScript code.
+placement and widget assignment. 
+
+Compilation (code generation) consists of one or two phases, depending
+on whether QLS is used. In any case, QL models are transformed to an
+intermediate model. Then, this model be directly transformed to
+JavaScript code using Rascal's string templates. Or, alternatively,
+the intermediate model is first post-processed by the QLS compiler
+which, based on a QLS model, reorders questions, changes widget types,
+and adds styling information. After styling, the updated intermediate model
+is rendered to JavaScript code just like before. 
 
 
 
@@ -71,8 +77,9 @@ checks) which outputs JavaScript code.
 \paragraph{Scalability}
 Performance is an ongoing area of improvement in the Rascal
 implementation. Currently, Rascal is fully interpreted which could be
-a problem for performance. However, active development on the compiler
-for Rascal will significantly improve future performance.
+a problem for performance. However, active development of the compiler
+for Rascal will significantly improve future performance. We hope to
+show the new compiler at the LWC'14 workshop. 
 
 The builtin parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
 algorithm with a worst-case bound of $O(n^3)$. However, on average
@@ -99,12 +106,17 @@ which does not affect the semantics of the questionnaire.
 
 \section{Demonstration at LWC'14}
 
-To demonstrate how well the Rascal implementation of QL scales, I will
+To demonstrate how well the Rascal implementation of QL scales, we will
 use the Binary Search Questionnaire suggested in the reference
 implementation~\cite{ReferenceImpl}. Running Rascal's benchmarking
 library on parsing, parsing+checking, and parsing+checking+compilation
 on increasing sizes of this questionnaire, allows us to plot out the
 behavior of runtime performance of the various components. 
+
+With respect to teamwork, we assume that the traditional
+version-control workflow is well-known and does not need
+demonstration. Instead we will show our approach of semantic impact
+analysis using a concrete example. 
 
 
 
