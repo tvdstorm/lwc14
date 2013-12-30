@@ -4,61 +4,65 @@
 \usepackage[scaled=0.8]{beramono}
 \begin{document}
 \title{LWC'14: Rascal Submission}
-\author{Tijs van der Storm \\ 
+\author{Tijs van der Storm \\
 Centrum Wiskunde \&\ Informatica \\
 \href{mailto:storm@cwi.nl}{\texttt{storm@cwi.nl}} / \href{http://twitter.com/tvdstorm}{\texttt{@tvdstorm}}
+\and Pablo Inostroza Valdera\\ 
+Centrum Wiskunde \&\ Informatica \\
+\href{mailto:pvaldera@cwi.nl}{\texttt{pvaldera@cwi.nl}}
 }
 \maketitle
 
 \section{The Rascal Language Workbench}
 
-
-\url{http://www.rascal-mpl.org}
-
-\cite{KlintSV09}
-
-- Functional meta programming language featuring, extensible modules,
-higher-order functions, powerful range of pattern matching operators,
-comprehensions (map, set, list)
-
-- Context-free grammars: modular, arbitrary, keyword reservation,
-lookahead restrictions
-
-- Rewrite rules and traversal primitives for tree transformation
-(model-to-model).
-
-- String templates for light-weight model-to-text transformation.
-
-- Dynamic IDE support based on Eclipse through
-IMP~\cite{CharlesFSDV09}: syntax highlighting, outliners,
-hyperlinking, folding, error marking, hover documentation, building.
+Rascal is a meta programming language designed for transforming and
+analyzing source code in the broad sense~\cite{KlintSV09}
+(\url{http://www.rascal-mpl.org}). Embedded in Eclipse, Rascal
+provides a versatile meta-environment for the design and
+implementation of domain-specific language parsers, analyzers,
+compilers and IDEs. Notable features include:
+\begin{itemize}
+\item Functional programming at the core, including support for
+  extensible modules, higher-order functions, powerful pattern
+  matching and comprehensions.
+\item Built-in context-free grammars backed by general parsing. As a
+  result, there is no restriction on grammar rules (e.g.,
+  left-recursion is supported) and syntax definitions can be built in
+  a modular fashion.
+\item Rewrite rules and traversal primitives for tree transformation
+  (model-to-model). String templates for light-weight model-to-text
+  transformation.
+\item Programmable IDE support based on Eclipse
+  IMP~\cite{CharlesFSDV09}, which provides out-of-the-box support for
+  syntax highlighting, code folding, identifier hyperlinking, hover
+  documentation, outlining, error marking and builders. 
+\end{itemize}
 
 
 \section{QL and QLS base assignment}
 
 The implementation of QL and QLS consists of syntax definition and
 various analyses and transformations to implement semantic aspects
-such as compilation, type checking and normalization.
+such as type checking, normalization, and compilation. The
+implementation will be similar to earlier implementations of QL and
+QLS in Rascal~\cite{QLRKemi,Demoqles}, but for LWC'14 it will generate
+code compatible with the reference solution~\cite{ReferenceImpl}.
 
 The syntax of both languages is defined using Rascal's built-in
 context-free grammars. Annotations in the grammar enable custom syntax
-highlighting and code folding behavior in the QL/QLS editors.
-
-Semantic analysis and compilation is implemented as transformations of
-the syntax tree. Semantic analysis consists of name analysis (finding
-a declaration for every used question name) and type checking
-(ensuring that question are correctly used in expressions, and that
-conditions are boolean expressions). In both cases, the tree is
-decorated with errors and warnings (if any). These are shown at the
-appropriate locations in the editor. When type checking QLS models,
-the corresponding QL model is loaded first, to allow checking the
-consistency of layout directives with respect to the questions in the
-questionnaire.
-
-Compilation (code generation) is realized using Rascal's string
-templates. It is simply a traversal over the syntax tree (which is
-assumed to have passed all semantic checks) which outputs JavaScript
-code. 
+highlighting and code folding behavior in the QL/QLS editors. Semantic
+analysis and compilation are are transformations of the syntax tree.
+Semantic analysis consists of name analysis (finding a declaration for
+every used question name) and type checking (ensuring that question
+are correctly used in expressions, and that conditions are boolean
+expressions). In both cases, the tree is decorated with errors and
+warnings (if any) which are shown at the appropriate locations in the
+QL/QLS editors. When type checking QLS models, the corresponding QL
+model is loaded first, to allow checking the consistency of question
+placement and widget assignment. Compilation (code generation) is
+realized using Rascal's string templates. It is simply a traversal
+over the syntax tree (which is assumed to have passed all semantic
+checks) which outputs JavaScript code.
 
 
 
@@ -66,20 +70,21 @@ code.
 
 \paragraph{Scalability}
 Performance is an ongoing area of improvement in the Rascal
-implementation. Currently, Rascal is fully interpreted which is
-non-optimal for runtime performance. However, active development on
-a compiler for Rascal will (hopefully) resolve many of the issues. 
+implementation. Currently, Rascal is fully interpreted which could be
+a problem for performance. However, active development on the compiler
+for Rascal will significantly improve future performance.
 
 The builtin parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
 algorithm with a worst-case bound of $O(n^3)$. However, on average
-case grammars it is known to perform quite well (fast enough for
-interactive use on Rascal source files itself). Ongoing research at
-CWI aims to improve the performance of the parser as well.
+case grammars it is known to often perform much better. For instance,
+it is fast enough for interactive use in Rascal source code editors.
+Ongoing research at CWI aims to improve the performance of the parser
+as well.
 
 
 \paragraph{Teamwork}
 Since Rascal is a textual language workbench, any traditional version
-control system can be used to facilate teamwork, on both language and
+control system can be used to facilitate teamwork, on both language and
 questionnaires. The user of QL/QLS can use the built-in support in
 Eclipse for, e.g., Git, to show differences between files, apply
 patches, or commit changes to version control. 
@@ -89,25 +94,19 @@ declarative, the Rascal implementation will contain semantic impact
 analysis of changes to QL/QLS models. This will allow the modeler to
 inspect the \textit{semantic} effects of a particular set of changes,
 in order to validate that an applied patch does not introduce logic
-that was unintended. An example is detection of question renames,
+that was unintended. An example is detection of renaming a question,
 which does not affect the semantics of the questionnaire.
 
 \section{Demonstration at LWC'14}
 
+To demonstrate how well the Rascal implementation of QL scales, I will
+use the Binary Search Questionnaire suggested in the reference
+implementation~\cite{ReferenceImpl}. Running Rascal's benchmarking
+library on parsing, parsing+checking, and parsing+checking+compilation
+on increasing sizes of this questionnaire, allows us to plot out the
+behavior of runtime performance of the various components. 
 
 
-Scalability
-- Performance trend of save (= parse/check/compile) over increasingly
-
-parse 
-parse + check
-parse + check + compile
-
- 
-larger models. Using binary search questionnaire.
-
-
-Team work
 
 \bibliographystyle{abbrv}
 \bibliography{lwc14}
