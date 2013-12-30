@@ -1,0 +1,117 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{a4wide,times,hyperref,url,mathptm}
+\usepackage[scaled=0.8]{beramono}
+\begin{document}
+\title{LWC'14: Rascal Submission}
+\author{Tijs van der Storm \\ 
+Centrum Wiskunde \&\ Informatica \\
+\href{mailto:storm@cwi.nl}{\texttt{storm@cwi.nl}} / \href{http://twitter.com/tvdstorm}{\texttt{@tvdstorm}}
+}
+\maketitle
+
+\section{The Rascal Language Workbench}
+
+
+\url{http://www.rascal-mpl.org}
+
+\cite{KlintSV09}
+
+- Functional meta programming language featuring, extensible modules,
+higher-order functions, powerful range of pattern matching operators,
+comprehensions (map, set, list)
+
+- Context-free grammars: modular, arbitrary, keyword reservation,
+lookahead restrictions
+
+- Rewrite rules and traversal primitives for tree transformation
+(model-to-model).
+
+- String templates for light-weight model-to-text transformation.
+
+- Dynamic IDE support based on Eclipse through
+IMP~\cite{CharlesFSDV09}: syntax highlighting, outliners,
+hyperlinking, folding, error marking, hover documentation, building.
+
+
+\section{QL and QLS base assignment}
+
+The implementation of QL and QLS consists of syntax definition and
+various analyses and transformations to implement semantic aspects
+such as compilation, type checking and normalization.
+
+The syntax of both languages is defined using Rascal's built-in
+context-free grammars. Annotations in the grammar enable custom syntax
+highlighting and code folding behavior in the QL/QLS editors.
+
+Semantic analysis and compilation is implemented as transformations of
+the syntax tree. Semantic analysis consists of name analysis (finding
+a declaration for every used question name) and type checking
+(ensuring that question are correctly used in expressions, and that
+conditions are boolean expressions). In both cases, the tree is
+decorated with errors and warnings (if any). These are shown at the
+appropriate locations in the editor. When type checking QLS models,
+the corresponding QL model is loaded first, to allow checking the
+consistency of layout directives with respect to the questions in the
+questionnaire.
+
+Compilation (code generation) is realized using Rascal's string
+templates. It is simply a traversal over the syntax tree (which is
+assumed to have passed all semantic checks) which outputs JavaScript
+code. 
+
+
+
+\section{Scalability and teamwork}
+
+\paragraph{Scalability}
+Performance is an ongoing area of improvement in the Rascal
+implementation. Currently, Rascal is fully interpreted which is
+non-optimal for runtime performance. However, active development on
+a compiler for Rascal will (hopefully) resolve many of the issues. 
+
+The builtin parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
+algorithm with a worst-case bound of $O(n^3)$. However, on average
+case grammars it is known to perform quite well (fast enough for
+interactive use on Rascal source files itself). Ongoing research at
+CWI aims to improve the performance of the parser as well.
+
+
+\paragraph{Teamwork}
+Since Rascal is a textual language workbench, any traditional version
+control system can be used to facilate teamwork, on both language and
+questionnaires. The user of QL/QLS can use the built-in support in
+Eclipse for, e.g., Git, to show differences between files, apply
+patches, or commit changes to version control. 
+
+Nevertheless, because the QL/QLS DSL is relatively simple and
+declarative, the Rascal implementation will contain semantic impact
+analysis of changes to QL/QLS models. This will allow the modeler to
+inspect the \textit{semantic} effects of a particular set of changes,
+in order to validate that an applied patch does not introduce logic
+that was unintended. An example is detection of question renames,
+which does not affect the semantics of the questionnaire.
+
+\section{Demonstration at LWC'14}
+
+
+
+Scalability
+- Performance trend of save (= parse/check/compile) over increasingly
+
+parse 
+parse + check
+parse + check + compile
+
+ 
+larger models. Using binary search questionnaire.
+
+
+Team work
+
+\bibliographystyle{abbrv}
+\bibliography{lwc14}
+
+
+
+\end{document}
