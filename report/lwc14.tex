@@ -30,11 +30,11 @@ compilers and IDEs. Notable features include:
   left-recursion is supported) and syntax definitions can be built in
   a modular fashion.
 \item Rewrite rules and traversal primitives for tree transformation
-  (model-to-model). String templates for light-weight model-to-text
+  (model-to-model). String templates for lightweight model-to-text
   transformation.
 \item Programmable IDE support based on Eclipse
   IMP~\cite{CharlesFSDV09}, which provides out-of-the-box support for
-  syntax highlighting, code folding, identifier hyperlinking, hover
+  syntax highlighting, code folding, identifier hyper linking, hover
   documentation, outlining, error marking and builders. 
 \end{itemize}
 
@@ -63,12 +63,12 @@ placement and widget assignment.
 
 Compilation (code generation) consists of one or two phases, depending
 on whether QLS is used. In any case, QL models are transformed to an
-intermediate model. Then, this model be directly transformed to
+intermediate model. Then, this model is directly transformed to
 JavaScript code using Rascal's string templates. Or, alternatively,
 the intermediate model is first post-processed by the QLS compiler
 which, based on a QLS model, reorders questions, changes widget types,
-and adds styling information. After styling, the updated intermediate model
-is rendered to JavaScript code just like before. 
+and adds styling information. After styling, the updated intermediate
+model is rendered to JavaScript code just like before.
 
 
 
@@ -81,7 +81,7 @@ a problem for performance. However, active development of the compiler
 for Rascal will significantly improve future performance. We hope to
 show the new compiler at the LWC'14 workshop. 
 
-The builtin parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
+The built-in parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
 algorithm with a worst-case bound of $O(n^3)$. However, on average
 case grammars it is known to often perform much better. For instance,
 it is fast enough for interactive use in Rascal source code editors.
@@ -96,13 +96,13 @@ questionnaires. The user of QL/QLS can use the built-in support in
 Eclipse for, e.g., Git, to show differences between files, apply
 patches, or commit changes to version control. 
 
-Nevertheless, because the QL/QLS DSL is relatively simple and
-declarative, the Rascal implementation will contain semantic impact
+Nevertheless, because the QL/QLS DSL is a high-level and declarative
+language, it is easy provide additional support. Along this line of
+thought, the Rascal implementation will contain semantic impact
 analysis of changes to QL/QLS models. This will allow the modeler to
-inspect the \textit{semantic} effects of a particular set of changes,
-in order to validate that an applied patch does not introduce logic
-that was unintended. An example is detection of renaming a question,
-which does not affect the semantics of the questionnaire.
+inspect the semantic effects of a particular set of changes, in order
+to validate that an applied patch does not introduce logic that was
+unintended. 
 
 \section{Demonstration at LWC'14}
 
@@ -114,11 +114,9 @@ on increasing sizes of this questionnaire, allows us to plot out the
 behavior of runtime performance of the various components. 
 
 With respect to teamwork, we assume that the traditional
-version-control workflow is well-known and does not need
+version-control work flow is well-known and does not need
 demonstration. Instead we will show our approach of semantic impact
 analysis using a concrete example. 
-
-
 
 \bibliographystyle{abbrv}
 \bibliography{lwc14}
