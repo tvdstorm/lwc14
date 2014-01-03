@@ -96,13 +96,11 @@ questionnaires. The user of QL/QLS can use the built-in support in
 Eclipse for, e.g., Git, to show differences between files, apply
 patches, or commit changes to version control. 
 
-Nevertheless, because the QL/QLS DSL is a high-level and declarative
-language, it is easy provide additional support. Along this line of
-thought, the Rascal implementation will contain semantic impact
-analysis of changes to QL/QLS models. This will allow the modeler to
-inspect the semantic effects of a particular set of changes, in order
-to validate that an applied patch does not introduce logic that was
-unintended. 
+While the traditional version control approach works well in practice,
+sometimes one would like to have custom support, for instance, to
+inspect differences between models. Rascal provides an interface for
+hooking up custom ``diff'' support for your language. 
+
 
 \section{Demonstration at LWC'14}
 
@@ -115,8 +113,8 @@ behavior of runtime performance of the various components.
 
 With respect to teamwork, we assume that the traditional
 version-control work flow is well-known and does not need
-demonstration. Instead we will show our approach of semantic impact
-analysis using a concrete example. 
+demonstration. Instead we will show structural differencing support
+for QL and QLS models.
 
 \bibliographystyle{abbrv}
 \bibliography{lwc14}
