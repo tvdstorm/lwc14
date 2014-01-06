@@ -82,11 +82,11 @@ for Rascal will significantly improve future performance. We hope to
 show the new compiler at the LWC'14 workshop. 
 
 The built-in parser of Rascal is based on GLL~\cite{GLLPTGEN}, an
-algorithm with a worst-case bound of $O(n^3)$. However, on average
-case grammars it is known to often perform much better. For instance,
-it is fast enough for interactive use in Rascal source code editors.
-Ongoing research at CWI aims to improve the performance of the parser
-as well.
+algorithm with a worst-case complexity of $O(n^3)$. However, on
+average case grammars it is known to often perform much better. For
+instance, it is fast enough for interactive use in the editors for
+Rascal source code itself. Ongoing research at CWI aims to improve the
+performance of the parser as well.
 
 
 \paragraph{Teamwork}
@@ -104,12 +104,12 @@ hooking up custom ``diff'' support for your language.
 
 \section{Demonstration at LWC'14}
 
-To demonstrate how well the Rascal implementation of QL scales, we will
-use the Binary Search Questionnaire suggested in the reference
+To demonstrate how well the Rascal implementation of QL scales, we
+will use the Binary Search Questionnaire suggested in the reference
 implementation~\cite{ReferenceImpl}. Running Rascal's benchmarking
 library on parsing, parsing+checking, and parsing+checking+compilation
 on increasing sizes of this questionnaire, allows us to plot out the
-behavior of runtime performance of the various components. 
+behavior of the runtime performance of the various components.
 
 With respect to teamwork, we assume that the traditional
 version-control work flow is well-known and does not need
